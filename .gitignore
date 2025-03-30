@@ -1,0 +1,6 @@
+# Ignore experiments and results
+exp/
+result/
+
+tools/*/*/*.png
+tools/*/*/*/*.png
