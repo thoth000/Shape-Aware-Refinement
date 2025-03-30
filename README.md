@@ -3,6 +3,8 @@ This research proposes a **PDE-based trainable refinement module** for **tubular
 ![image](https://github.com/user-attachments/assets/3865efd2-732f-470a-9b96-36f107b2e5c5)
 
 ## Paper / Slides
+- [Presentation Slides](https://github.com/thoth000/Shape-Aware-Refinement/blob/main/docs/presentation_ja.pdf)
+- [JSAI 2025 Abstract (Japanese)](https://github.com/thoth000/Shape-Aware-Refinement/blob/main/docs/jsai_abstract.md)
 
 ## Overview
 - PDE-based refinement improves mask continuity **while maintaining thin shape**
