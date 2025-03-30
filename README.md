@@ -20,12 +20,12 @@ This research proposes a **PDE-based trainable refinement module** for **tubular
 
 2. Run `/dataset/data_process.py` to fit dataset for training models.
 ```bash
-cd dataset
-python data_process.py -dp DATASET_PATH -dn DATASET_NAME
+$ cd dataset
+$ python data_process.py -dp DATASET_PATH -dn DATASET_NAME
 ```
 
 3. train and test model
 ```bash
-cd pde-shape-refiner
-main_ddp.sh
+$ cd pde-shape-refiner
+$ main_ddp.sh
 ```
