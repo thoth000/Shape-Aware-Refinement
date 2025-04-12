@@ -106,8 +106,9 @@ class Loss(torch.nn.Module):
         cl_dice_loss = 1 - (2 * tprec * tsens) / (tprec + tsens)
 
         # バッチ次元ごとに損失を組み合わせ
-        loss = (1 - alpha) * dice_loss + alpha * cl_dice_loss
+        # loss = (1 - alpha) * dice_loss + alpha * cl_dice_loss
+
+        loss = bce_loss
 
         # バッチ全体の損失を平均化
-        # return loss.mean()
         return loss.mean()

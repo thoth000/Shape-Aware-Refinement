@@ -251,6 +251,18 @@ def anisotropic_diffusion_(preds, diffusion_tensor, num_iterations=10, gamma=0.1
 
     return preds
 
+def dti(preds, thresh_low=0.3, thresh_high=0.5, max_iter=1000):
+    fixed_mask = (preds > thresh_high).float()
+    checkable_mask = (preds >= thresh_low).float()
+    new_fixed_mask = torch.zeros_like(fixed_mask)
+    count = 0
+    while not torch.equal(new_fixed_mask, fixed_mask):
+        count += 1
+        new_fixed_mask = fixed_mask.clone()
+        fixed_mask = F.max_pool2d(fixed_mask, 3, 1, 1) * checkable_mask
+    
+    return fixed_mask
+
 
 def dti_normal(preds, thresh_low=0.3, thresh_high=0.5, max_iter=1000):
     h, w = preds.shape[2:]
