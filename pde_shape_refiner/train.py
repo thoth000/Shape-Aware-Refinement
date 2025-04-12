@@ -209,7 +209,43 @@ def divergence(grad_x, grad_y):
     return div_x + div_y
 
 
-def anisotropic_diffusion(preds, diffusion_tensor, num_iterations=10, gamma=0.1):
+def compute_divergence(preds, diffusion_tensor):
+    # preds: [B,1,H,W] → grad_x, grad_y → [B,2,H,W]
+    grad_x, grad_y = gradient(preds)
+    grad = torch.cat([grad_x, grad_y], dim=1)
+    # 異方性テンソル変換
+    tg = torch.einsum('bijhw,bjhw->bihw', diffusion_tensor, grad)
+    # ダイバージェンス
+    div_x, div_y = tg[:,0], tg[:,1]
+    div = divergence(div_x.unsqueeze(1), div_y.unsqueeze(1))
+    return F.relu(div)  # [B,1,H,W]
+
+
+def anisotropic_diffusion(preds, diffusion_tensor, num_iterations=100, gamma=0.1):
+    """
+        preds: probability map
+        diffusion_tensor: directional tensor
+        num_iterations: number of iterations
+        gamma: step size
+    """
+    for _ in range(num_iterations):
+        # basic divergence
+        div1 = compute_divergence(preds, diffusion_tensor)
+
+        # RK4
+        h = gamma
+        k1 = div1
+        k2 = compute_divergence(preds + 0.5*h*k1, diffusion_tensor)
+        k3 = compute_divergence(preds + 0.5*h*k2, diffusion_tensor)
+        k4 = compute_divergence(preds +     h*k3, diffusion_tensor)
+
+        # update
+        preds = preds + (h/6.0) * (k1 + 2*k2 + 2*k3 + k4)
+        preds = preds.clamp(0, 1)
+    
+    return preds
+
+def anisotropic_diffusion_(preds, diffusion_tensor, num_iterations=10, gamma=0.1):
     """
     異方性拡散プロセスを実行。
 

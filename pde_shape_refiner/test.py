@@ -175,7 +175,43 @@ def divergence(grad_x, grad_y):
     return div_x + div_y
 
 
-def anisotropic_diffusion(preds, diffusion_tensor, num_iterations=10, gamma=0.1):
+def compute_divergence(preds, diffusion_tensor):
+    # preds: [B,1,H,W] → grad_x, grad_y → [B,2,H,W]
+    grad_x, grad_y = gradient(preds)
+    grad = torch.cat([grad_x, grad_y], dim=1)
+    # 異方性テンソル変換
+    tg = torch.einsum('bijhw,bjhw->bihw', diffusion_tensor, grad)
+    # ダイバージェンス
+    div_x, div_y = tg[:,0], tg[:,1]
+    div = divergence(div_x.unsqueeze(1), div_y.unsqueeze(1))
+    return F.relu(div)  # [B,1,H,W]
+
+
+def anisotropic_diffusion(preds, diffusion_tensor, num_iterations=100, gamma=0.1):
+    """
+        preds: probability map
+        diffusion_tensor: directional tensor
+        num_iterations: number of iterations
+        gamma: step size
+    """
+    for _ in range(num_iterations):
+        # basic divergence
+        div1 = compute_divergence(preds, diffusion_tensor)
+
+        # RK4
+        h = gamma
+        k1 = div1
+        k2 = compute_divergence(preds + 0.5*h*k1, diffusion_tensor)
+        k3 = compute_divergence(preds + 0.5*h*k2, diffusion_tensor)
+        k4 = compute_divergence(preds +     h*k3, diffusion_tensor)
+
+        # update
+        preds = preds + (h/6.0) * (k1 + 2*k2 + 2*k3 + k4)
+        preds = preds.clamp(0, 1)
+    
+    return preds
+
+def anisotropic_diffusion_(preds, diffusion_tensor, num_iterations=10, gamma=0.1):
     """
     異方性拡散プロセスを実行。
 
@@ -205,25 +241,15 @@ def anisotropic_diffusion(preds, diffusion_tensor, num_iterations=10, gamma=0.1)
         div_x, div_y = transformed_grad[:, 0], transformed_grad[:, 1]
         div = divergence(div_x.unsqueeze(1), div_y.unsqueeze(1))  # [B, 1, H, W]
 
-        div = F.relu(div)  # ダイバージェンスの正値部分のみを取得
+        # divが負ならば0にクリップ
+        div = F.relu(div)
 
         # 拡散更新
         preds = preds + gamma * div
+        
+        preds = preds.clamp(0, 1)
 
-        preds = preds.clamp(0, 1)  # 0から1の範囲にクリップ
     return preds
-
-def dti(preds, thresh_low=0.3, thresh_high=0.5, max_iter=1000):
-    fixed_mask = (preds > thresh_high).float()
-    checkable_mask = (preds >= thresh_low).float()
-    new_fixed_mask = torch.zeros_like(fixed_mask)
-    count = 0
-    while not torch.equal(new_fixed_mask, fixed_mask):
-        count += 1
-        new_fixed_mask = fixed_mask.clone()
-        fixed_mask = F.max_pool2d(fixed_mask, 3, 1, 1) * checkable_mask
-    
-    return fixed_mask
 
 
 def dti_normal(preds, thresh_low=0.3, thresh_high=0.5, max_iter=1000):
