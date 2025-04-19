@@ -1,4 +1,4 @@
-![network](https://github.com/user-attachments/assets/7e2c8daa-20e2-4cbd-980d-bc3b9b3a14d5)
+![network](https://github.com/user-attachments/assets/3865efd2-732f-470a-9b96-36f107b2e5c5)
 
 # タイトル
 異方性拡散を活用した管状構造セグメンテーションにおける連続性の向上
