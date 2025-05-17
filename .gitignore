@@ -4,3 +4,7 @@ result/
 
 tools/*/*/*.png
 tools/*/*/*/*.png
+
+pde_shape_refiner/*.pth
+
+__pycache__/
