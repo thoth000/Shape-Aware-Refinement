@@ -311,8 +311,8 @@ def save_direction_vector_info(vector, mask, result_dir):
     save_masked_output_with_imsave(vector[:, 1:2], mask, os.path.join(result_dir, 'masked_vec_y.png'))
     
     # 絶対値を取った方向ベクトル
-    save_masked_output_with_imsave(torch.abs(vector[:, 0:1]), mask, os.path.join(result_dir, 'masked_abs_vec_x.png'))
-    save_masked_output_with_imsave(torch.abs(vector[:, 1:2]), mask, os.path.join(result_dir, 'masked_abs_vec_y.png'))
+    save_masked_output_with_imsave(torch.abs(vector[:, 0:1]), mask, os.path.join(result_dir, 'masked_abs_vec_x.png'), vmin=0, vmax=1)
+    save_masked_output_with_imsave(torch.abs(vector[:, 1:2]), mask, os.path.join(result_dir, 'masked_abs_vec_y.png'), vmin=0, vmax=1)
 
 def sample_single_image(args):
     """

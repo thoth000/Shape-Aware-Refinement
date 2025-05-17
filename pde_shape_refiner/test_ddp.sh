@@ -12,7 +12,7 @@ NUM_GPUS=$(echo $CUDA_VISIBLE_DEVICES | awk -F',' '{print NF}')
 
 # トレーニングと共通するパラメータ
 BATCH_SIZE=6
-RESOLUTION=584
+RESOLUTION=592
 THRESHOLD=0.5
 RESULT_DIR="result"
 DATASET_PATH="/home/sano/dataset/DRIVE"
