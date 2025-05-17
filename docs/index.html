@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shape-Aware Refinement: 異方性拡散ステップ可視化</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <header>
+      <h1>Shape-Aware Refinement</h1>
+      <div class="tags-container">
+        <span class="tag-item">画像セグメンテーション</span>
+        <span class="tag-item">管状構造</span>
+        <span class="tag-item">偏微分方程式</span>
+      </div>
+      <p class="subtitle">異方性拡散を用いて管状構造の予測マスク連続性を強化
+      <div class="external-links">
+        <a href="https://github.com/thoth000/Shape-Aware-Refinement" target="_blank" rel="noopener noreferrer" class="header-link">GitHub</a>
+        <a href="https://confit.atlas.jp/guide/event/jsai2025/subject/2Win5-63/advanced" target="_blank" rel="noopener noreferrer" class="header-link">JSAI2025公演情報</a>
+      </div>
+      <p class="author-name"><a href="https://thoth000.github.io/" target="_blank" rel="noopener noreferrer">佐野 裕馬</a>，松原 崇 (北海道大学)</p>
+    </header>
+
+    <main class="visualization-container">
+      <div class="controls-area">
+        <div>
+          <label for="clip-select">表示するクリップ領域:</label>
+          <select id="clip-select">
+            <option value="cliped_x160y120r60">クリップ領域 1 (x160, y120, r60)</option>
+            <option value="cliped_x175y210r90">クリップ領域 2 (x175, y210, r90)</option>
+          </select>
+        </div>
+        <div class="toggle-control">
+          <input type="checkbox" id="toggle-direction-image">
+          <label for="toggle-direction-image">方向推定画像を表示</label>
+        </div>
+      </div>
+
+      <div class="image-grid">
+        <!-- フルサイズ表示カラム -->
+        <div class="image-column" id="full-size-column">
+          <h2>フルサイズ領域</h2>
+          <div class="image-set">
+            <p>網膜カラー画像</p>
+            <img id="full-original-image" src="" alt="フルサイズ 網膜カラー画像">
+          </div>
+          <div class="image-set" id="full-direction-set">
+            <p>方向推定画像</p>
+            <img id="full-direction-image" src="" alt="フルサイズ 方向推定画像">
+          </div>
+          <div class="image-set">
+            <p>予測マスク (ステップ <span id="full-iter-label">0</span>)</p>
+            <img id="full-mask-image" src="" alt="フルサイズ 予測マスク">
+          </div>
+        </div>
+
+        <!-- クリップ画像表示カラム -->
+        <div class="image-column" id="clipped-column">
+          <h2>クリップ領域</h2>
+          <div class="image-set">
+            <p>網膜カラー画像</p>
+            <img id="clipped-original-image" src="" alt="クリップ 網膜カラー画像">
+          </div>
+          <div class="image-set" id="clipped-direction-set">
+            <p>方向推定画像</p>
+            <img id="clipped-direction-image" src="" alt="クリップ 方向推定画像">
+          </div>
+          <div class="image-set">
+            <p>予測マスク (ステップ <span id="clipped-iter-label">0</span>)</p>
+            <img id="clipped-mask-image" src="" alt="クリップ 予測マスク">
+          </div>
+        </div>
+      </div>
+
+      <div class="slider-container-wrapper">
+        <label for="iteration-slider">拡散ステップ:</label>
+        <input id="iteration-slider" type="range" min="0" max="9" step="1" value="0">
+      </div>
+    </main>
+
+    <footer>
+      <p>Created by <a href="https://thoth000.github.io/" target="_blank" rel="noopener noreferrer">thoth000</a></p>
+    </footer>
+  </div>
+  <script src="scripts.js"></script>
+</body>
+</html>

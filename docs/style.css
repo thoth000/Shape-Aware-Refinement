@@ -1,0 +1,295 @@
+:root {
+  --clr-bg: #FFF9FB;
+  --clr-primary: #220C10;
+  --clr-accent: #C52233;
+  --clr-highlight: #0353A4;
+  --clr-divider: rgba(0, 0, 0, 0.1);
+  --clr-tag-bg: rgba(0, 0, 0, 0.05);
+  --clr-card-bg: #ffffff;
+  --clr-card-shadow: rgba(0, 0, 0, 0.1);
+  --clr-button-text: #ffffff;
+}
+
+body {
+  font-family: 'Noto Sans JP', 'Roboto', sans-serif;
+  background-color: var(--clr-bg);
+  color: var(--clr-primary);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  width: 100%;
+  max-width: 1200px; /* 横幅を広めに設定 */
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2.5em;
+  color: var(--clr-primary);
+  margin-bottom: 0.5rem;
+}
+
+.external-links {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem; /* リンク間のスペース */
+  flex-wrap: wrap; /* 画面が狭い場合に折り返す */
+}
+
+.header-link {
+  display: inline-block;
+  background-color: var(--clr-highlight);
+  color: var(--clr-button-text);
+  padding: 0.6em 1.2em;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 0.9em;
+}
+
+.header-link:hover,
+.header-link:focus {
+  background-color: #024283; /* Darker Sapphire */
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.author-name {
+  font-size: 1em;
+  /* color: var(--clr-primary); を削除またはコメントアウト（リンク色で上書きするため） */
+  margin-top: 1rem; /* 上の要素との間隔 */
+  margin-bottom: 0.5rem; /* 下の要素との間隔 */
+  font-weight: bold;
+}
+
+.author-name {
+  text-decoration: none;
+}
+
+.author-name a:hover,
+.author-name a:focus {
+  text-decoration: underline; /* ホバー時に下線を表示 */
+  color: #024283; /* ホバー時の色を少し暗くする */
+}
+
+.tags-container {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem; /* 下の subtitle とのスペース */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem; /* タグ間のスペース */
+}
+
+.tag-item {
+  background-color: var(--clr-tag-bg);
+  color: var(--clr-primary);
+  padding: 0.3em 0.8em;
+  border-radius: 15px; /* より丸みを帯びたタグ */
+  font-size: 0.85em;
+  border: 1px solid var(--clr-divider);
+}
+
+header .subtitle {
+  font-size: 1.1em;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.visualization-container {
+  background-color: var(--clr-card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px var(--clr-card-shadow);
+  border: 1px solid var(--clr-divider);
+  max-width: 800px; /* image-gridのmax-widthに合わせるか、少し余裕を持たせる */
+  margin-left: auto; /* 中央揃え */
+  margin-right: auto; /* 中央揃え */
+  box-sizing: border-box; /* パディングとボーダーをmax-widthに含める */
+}
+
+.controls-area {
+  display: flex;
+  flex-wrap: wrap; /* 画面が狭い場合に折り返す */
+  justify-content: center;
+  align-items: center;
+  gap: 1rem; /* 要素間のスペース */
+  margin-bottom: 1.5rem;
+}
+
+.controls-area > div { /* direct children of controls-area */
+  display: flex;
+  align-items: center;
+}
+
+.controls-area label {
+  margin-right: 0.5rem;
+  font-weight: bold;
+}
+
+.controls-area .toggle-control label { /* Specific label for checkbox */
+  margin-left: 0.3rem; /* Space between checkbox and its label */
+  font-weight: normal; /* Override general label bolding if desired */
+}
+
+.controls-area select {
+  padding: 0.5em;
+  border-radius: 4px;
+  border: 1px solid var(--clr-divider);
+  background-color: #fff;
+}
+
+.image-grid {
+  display: flex;
+  gap: 2%; /* カラム間のスペースを割合で指定 */
+  justify-content: space-between; /* 両端に配置し、間のスペースを均等に */
+  margin-bottom: 1rem; /* スライダーとの間隔を調整 */
+  max-width: 800px; /* image-gridの最大幅を設定 */
+  margin-left: auto; /* 中央揃え */
+  margin-right: auto; /* 中央揃え */
+}
+
+.image-column {
+  width: 48%; 
+  min-width: 0;
+  /* background-color: var(--clr-tag-bg); を削除のまま */
+  padding: 0.5rem; 
+  /* border: 1px solid var(--clr-divider); を削除のまま */
+  box-sizing: border-box;
+}
+
+.image-column h2 { /* 新しく追加するサブタイトルのスタイル */
+  font-size: 1.2em; /* サブタイトルに適したフォントサイズ */
+  color: var(--clr-primary);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1rem; /* 画像セットとの間隔 */
+  padding-bottom: 0.25rem; /* 必要であれば微調整 */
+  /* border-bottom: 1px solid var(--clr-divider); */ /* 強調しすぎないようにボーダーはなし、または非常に薄くする */
+}
+
+.image-set {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.image-set p {
+  font-size: 0.9em;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.image-set img {
+  width: 100%; /* max-width から width に変更 */
+  height: auto;
+  border: 1px solid var(--clr-divider);
+  border-radius: 4px;
+  background-color: #e0e0e0; /* 画像読み込み中の背景 */
+  display: block;
+  margin: 0 auto;
+}
+
+.slider-container-wrapper {
+  width: 100%;
+  max-width: 600px;
+  margin: 1rem auto 0; /* 上マージンを調整 */
+  padding: 0.5rem 1rem; /* パディングを調整 */
+  /* background-color: var(--clr-tag-bg); を削除または変更 */
+  background-color: transparent; /* 背景を透明に */
+  border-radius: 6px;
+  text-align: center;
+}
+
+.slider-container-wrapper label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+#iteration-slider {
+  width: 80%;
+  margin-bottom: .5rem;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: #d3d3d3;
+  border-radius: 4px;
+  outline: none;
+}
+
+#iteration-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--clr-highlight);
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid var(--clr-card-bg);
+}
+#iteration-slider::-webkit-slider-thumb:hover {
+  background-color: #024283;
+}
+
+#iteration-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--clr-highlight);
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid var(--clr-card-bg);
+}
+#iteration-slider::-moz-range-thumb:hover {
+  background-color: #024283;
+}
+
+footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--clr-divider);
+  font-size: 0.9em;
+  color: #777;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  /* .image-grid の flex-direction: column; を削除またはコメントアウト */
+  /* .image-grid {
+    flex-direction: column;
+  } */
+  .page-wrapper {
+    padding: 1rem 0.5rem;
+  }
+  .visualization-container {
+    padding: 1rem;
+  }
+  /* .image-column の margin-bottom を削除またはコメントアウト (横並びのため不要) */
+  /* .image-column {
+    margin-bottom: 1.5rem;
+  }
+  .image-column:last-child {
+    margin-bottom: 0;
+  } */
+}
