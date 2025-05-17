@@ -5,6 +5,6 @@ result/
 tools/*/*/*.png
 tools/*/*/*/*.png
 
-pde_shape_refiner/*.pth
+pde_shape_refiner/models/*.pth
 
 __pycache__/
